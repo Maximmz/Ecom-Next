@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
+import { Providers } from "./providers";
 
 const openSans = Open_Sans({
   subsets: ['latin'],
@@ -22,10 +23,7 @@ export default function RootLayout({
     <html lang="en" className={openSans.className}>
       <body className="min-h-screen">
 
-          
-          
-              {children}
-           
+          <Providers>{children} </Providers>
           </body>
     </html>
   );
