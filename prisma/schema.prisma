@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,9 +7,159 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// User table for storing user information
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
   password String
   name     String?
+  // Relationship with Address table (one-to-many)
+  addresses Address[]
+  //Relationship with Review table (one-to-many)
+  reviews Review[]
+  //Relationship with CartItems table (one-to-many)
+  cartItems CartItem[]
+  //Relationship with Orders table (one-to-many)
+  orders Order[]
+  //Relationship with PaymentTransactions table (one-to-many)
+  payments PaymentTransaction[]
+  //Relationship with Wishlistitem table (one-to-many)
+  wishlist WishlistItem[]
+}
+
+// Product table for storing product information
+model Product {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String
+  price       Float
+  // Relationship with Category table (many-to-many)
+  categories  Category[]
+  // Relationship with Review table (one-to-many)
+  reviews     Review[]
+  // Relationship with CartItem table (one-to-many)
+  cartItems   CartItem[]
+  // Relationship with Image table (one-to-many)
+  images      Image[]
+   // Reverse relation to OrderItem (one-to-many)
+  orderItems  OrderItem[]
+  //Relationship with WishListItem table (one-to-many)
+  wishlistItem WishlistItem[]
+}
+// Review table for storing product reviews
+model Review {
+  id         Int     @id @default(autoincrement())
+  user       User    @relation(fields: [userId], references: [id])
+  userId     Int
+  product    Product @relation(fields: [productId], references: [id])
+  productId  Int
+  rating     Int
+  comment    String
+  createdAt  DateTime @default(now())
+}
+
+// CartItem table for storing items in the user's cart
+model CartItem {
+  id         Int      @id @default(autoincrement())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     Int
+  product    Product  @relation(fields: [productId], references: [id])
+  productId  Int
+  quantity   Int
+  createdAt  DateTime @default(now())
+}
+
+// Order table for storing order information
+model Order {
+  id              Int           @id @default(autoincrement())
+  user            User          @relation(fields: [userId], references: [id])
+  userId          Int
+  orderItems      OrderItem[]
+  totalPrice      Float
+  status          String
+  // Additional fields for shipping information
+  shippingAddress Address @relation(fields: [shippingAddressId], references: [id])
+  shippingAddressId Int
+  // Additional fields for payment information
+  paymentStatus   String
+  paymentMethod   String
+  // Additional fields for tracking order progress
+  createdAt       DateTime      @default(now())
+  //Relationship with Payment table (One-to-one)
+  payment PaymentTransaction[]
+}
+
+model OrderItem {
+  id         Int      @id @default(autoincrement())
+  order      Order    @relation(fields: [orderId], references: [id])
+  orderId    Int
+  product    Product  @relation(fields: [productId], references: [id])
+  productId  Int
+  quantity   Int
+  // Additional fields such as price, discounts, etc. can be added here
+}
+
+// Category table for organizing products
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String
+  // Relationship with Product table (many-to-many)
+  products  Product[]
+}
+
+// Image table for storing product images
+model Image {
+  id        Int       @id @default(autoincrement())
+  url       String
+  // Relationship with Product table (one-to-many)
+  product   Product   @relation(fields: [productId], references: [id])
+  productId Int
+}
+
+// Discount table for storing discount/coupon information
+model Discount {
+  id               Int      @id @default(autoincrement())
+  code             String   @unique
+  percentage       Float
+  expirationDate   DateTime
+  minPurchaseAmount Float
+}
+
+// Address table for storing user addresses
+model Address {
+  id          Int     @id @default(autoincrement())
+  user        User    @relation(fields: [userId], references: [id])
+  userId      Int
+  addressType String  // shipping or billing
+  street      String
+  city        String
+  state       String
+  country     String
+  postalCode  String
+  //Relationship with Order table (one-to-one)
+  order Order[]
+}
+
+// PaymentTransaction table for storing payment-related information
+model PaymentTransaction {
+  id          Int     @id @default(autoincrement())
+  user        User    @relation(fields: [userId], references: [id])
+  userId      Int
+  order       Order   @relation(fields: [orderId], references: [id])
+  orderId     Int
+  amount      Float
+  status      String
+  method      String
+  // Additional fields for transaction details
+  createdAt   DateTime @default(now())
+}
+
+// WishlistItem table for storing wishlist items
+model WishlistItem {
+  id         Int      @id @default(autoincrement())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     Int
+  product    Product  @relation(fields: [productId], references: [id])
+  productId  Int
+  createdAt  DateTime @default(now())
 }
