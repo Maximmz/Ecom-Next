@@ -1,5 +1,5 @@
-# Realtime Chat
-Realtime Chat on Next.js Tailwind TypeScript and Redis
+# E-Commerce Web Application
+Web Application for E-Commerce created on on Next.js Tailwind TypeScript and PostgreSQL
 
 ## Getting Started
 
