@@ -11,6 +11,6 @@ export function Nav({children}: {children: ReactNode}) {
 
 export function NavLink(props: Omit<ComponentProps<typeof Link>, "className">) {
     const pathname = usePathname()
-    return <Link {...props } className={cn("p-4  hover:bg-secondary hover:text-secondary-foreground focus-visible:hover:bg-secondary focus-visible:hover:text-secondary-foreground",
+    return <Link {...props } className={cn("p-4 rounded-full hover:bg-secondary hover:text-secondary-foreground focus-visible:hover:bg-secondary focus-visible:hover:text-secondary-foreground",
     pathname=== props.href && "bg-background text-foreground")} />
 }

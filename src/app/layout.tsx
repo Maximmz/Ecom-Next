@@ -10,8 +10,8 @@ const openSans = Open_Sans({
 
 
 export const metadata: Metadata = {
-  title: "Chatting App",
-  description: "Realtime Chat Application",
+  title: "E-Commerce",
+  description: "E-Commerce Web Application",
 };
 
 export default function RootLayout({
