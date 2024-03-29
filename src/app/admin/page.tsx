@@ -6,23 +6,23 @@ import { Card,
 
 export default function AdminDashboard() {
     return (
-        <div className="grid-cols-1 lg:grid-cols-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
            
-            <Card className="mb-2">
+            <Card>
                 <CardHeader>
                 <CardTitle>Products</CardTitle>
                 <CardDescription>There are 69 Products</CardDescription>
                 </CardHeader>
-                <CardContent>2 products have been sold</CardContent>
+                <CardContent><p>2 products have been sold</p></CardContent>
             </Card>
-            <Card className="mb-2">
+            <Card>
                 <CardHeader>
                 <CardTitle>Customers</CardTitle>
                 <CardDescription>There are 69 users</CardDescription>
                 </CardHeader>
                 <CardContent>2 users have purchased items</CardContent>
             </Card>
-            <Card className="">
+            <Card>
                 <CardHeader>
                 <CardTitle>Sales</CardTitle>
                 <CardDescription>2 total sales across website</CardDescription>
