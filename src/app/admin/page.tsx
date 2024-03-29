@@ -3,32 +3,85 @@ import { Card,
          CardDescription, 
          CardTitle,
          CardHeader } from "@/components/ui/card";
+import db from "@/db/db";
 
-export default function AdminDashboard() {
+       async function getSalesData() {
+         const data = await db.order.aggregate({
+                _sum: {totalPrice: true},
+                _count: true
+            })
+            return {
+                amount: data._sum.totalPrice || 0,
+                numberOfSales: data._count
+            }
+         }
+         
+
+         async function getUsers() {
+            const data = await db.user.aggregate({
+                
+                _count: true,
+                
+            })
+            
+            return {
+                numberOfUsers: data._count
+
+            }
+         }
+         async function getProducts() {
+            const data = await db.product.aggregate({
+                _count: true
+            })
+            return {
+                numberOfProducts: data._count
+            }
+         }
+         async function getRatings() {
+            const data = await db.user.aggregate({
+                _count: true
+                
+            
+            })
+                return {
+                    numberOfRatings: data._count
+                }
+
+            }
+         
+
+export default async function AdminDashboard() {
+    const salesData = await getSalesData();
+    const userData = await getUsers();
+    const productData = await getProducts();
+    const ratingData = await getRatings();
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-           
-            <Card>
-                <CardHeader>
-                <CardTitle>Products</CardTitle>
-                <CardDescription>There are 69 Products</CardDescription>
-                </CardHeader>
-                <CardContent><p>2 products have been sold</p></CardContent>
-            </Card>
-            <Card>
-                <CardHeader>
-                <CardTitle>Customers</CardTitle>
-                <CardDescription>There are 69 users</CardDescription>
-                </CardHeader>
-                <CardContent>2 users have purchased items</CardContent>
-            </Card>
-            <Card>
-                <CardHeader>
-                <CardTitle>Sales</CardTitle>
-                <CardDescription>2 total sales across website</CardDescription>
-                </CardHeader>
-                <CardContent>15$</CardContent>
-            </Card>
+           <DashboardCard title="Sales" subtitle={`Number of sales: ${salesData.numberOfSales}`} body={`Total amount earned: $${salesData.amount}`}/>
+            <DashboardCard title="Customers" subtitle={`Number of users: ${userData.numberOfUsers}`} body={`{0}`} />
+            <DashboardCard title="Products" subtitle={`Number of products: ${productData.numberOfProducts}`} body={`Number of products rated: ${ratingData.numberOfRatings}`}/>
+         
         </div>
     )
 }
+
+type DashboardCardProps = {
+    title: String,
+    subtitle: String,
+    body: String
+}
+
+function DashboardCard({title, subtitle, body}: DashboardCardProps) {
+    return (
+        
+        <Card>
+                <CardHeader>
+                <CardTitle>{title}</CardTitle>
+                <CardDescription>{subtitle}</CardDescription>
+                </CardHeader>
+                <CardContent>{body}</CardContent>
+            </Card>
+           
+            
+    )
+} 
