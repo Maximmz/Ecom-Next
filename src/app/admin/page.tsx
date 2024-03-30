@@ -38,10 +38,8 @@ import db from "@/db/db";
             }
          }
          async function getRatings() {
-            const data = await db.user.aggregate({
+            const data = await db.review.aggregate({
                 _count: true
-                
-            
             })
                 return {
                     numberOfRatings: data._count
@@ -55,10 +53,11 @@ export default async function AdminDashboard() {
     const userData = await getUsers();
     const productData = await getProducts();
     const ratingData = await getRatings();
+    console.log(ratingData.numberOfRatings)
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
            <DashboardCard title="Sales" subtitle={`Number of sales: ${salesData.numberOfSales}`} body={`Total amount earned: $${salesData.amount}`}/>
-            <DashboardCard title="Customers" subtitle={`Number of users: ${userData.numberOfUsers}`} body={`{0}`} />
+            <DashboardCard title="Customers" subtitle={`Number of users: ${userData.numberOfUsers}`} body={`User interactions: ${ratingData.numberOfRatings}`} />
             <DashboardCard title="Products" subtitle={`Number of products: ${productData.numberOfProducts}`} body={`Number of products rated: ${ratingData.numberOfRatings}`}/>
          
         </div>
