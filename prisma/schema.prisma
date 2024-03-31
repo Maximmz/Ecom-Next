@@ -34,7 +34,7 @@ model Product {
   name        String
   description String
   price       Float
-  available   Boolean
+  available   Boolean @default(true)
   // Relationship with Category table (many-to-many)
   categories  Category[]
   // Relationship with Review table (one-to-many)

@@ -19,23 +19,26 @@ import { formatNumber, formatCurrency } from "@/lib/formatters";
          
 
          async function getUsers() {
-            const data = await db.user.aggregate({
+           const [userCount, orderData] = await Promise.all([
+                db.user.count(),
+                db.order.aggregate({
+                    _sum: {totalPrice: true}
+                })
                 
-                _count: true,
-                
-            })
-            
+            ])
             return {
-                numberOfUsers: data._count
-
+                userCount,
+                averageValuePerUser: userCount === 0 ? 0 : (orderData._sum.totalPrice || 0 / userCount)
             }
+        
          }
          async function getProducts() {
-            const data = await db.product.aggregate({
-                _count: true
-            })
+            const [activeProducts, inactiveProducts] = await Promise.all([
+            db.product.count({where: {available: true}}),
+            db.product.count({where: {available: false}})
+            ])
             return {
-                numberOfProducts: data._count
+                activeProducts, inactiveProducts
             }
          }
          async function getRatings() {
@@ -50,16 +53,18 @@ import { formatNumber, formatCurrency } from "@/lib/formatters";
          
 
 export default async function AdminDashboard() {
-    const salesData = await getSalesData();
-    const userData = await getUsers();
-    const productData = await getProducts();
-    const ratingData = await getRatings();
-    console.log(ratingData.numberOfRatings)
+    const [salesData, userData, productData, ratingData] = await Promise.all([
+        getSalesData(),
+        getUsers(),
+        getProducts(),
+        getRatings()
+    ])
+
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-           <DashboardCard title="Sales" subtitle={`Number of sales: ${formatNumber(salesData.numberOfSales)}`} body={`Total amount earned: $${formatCurrency(salesData.amount)}`}/>
-            <DashboardCard title="Customers" subtitle={`Number of users: ${userData.numberOfUsers}`} body={`User interactions: ${ratingData.numberOfRatings}`} />
-            <DashboardCard title="Products" subtitle={`Number of products: ${productData.numberOfProducts}`} body={`Number of products rated: ${ratingData.numberOfRatings}`}/>
+           <DashboardCard title="Sales" subtitle={`Number of sales: ${formatNumber(salesData.numberOfSales)}`} body={`Amount earned: ${formatCurrency(salesData.amount)}`}/>
+            <DashboardCard title="Customers" subtitle={`Number of users: ${userData.userCount}`} body={`Average user spendings: ${userData.averageValuePerUser}`} />
+            <DashboardCard title="Products" subtitle={`${productData.activeProducts} Active, ${productData.inactiveProducts} Inactive`} body={`Number of products rated: ${ratingData.numberOfRatings}`}/>
          
         </div>
     )
