@@ -6,17 +6,18 @@ import { Card,
 import db from "@/db/db";
 import { formatNumber, formatCurrency } from "@/lib/formatters";
 
+
        async function getSalesData() {
          const data = await db.order.aggregate({
                 _sum: {totalPrice: true},
                 _count: true
             })
+           
             return {
                 amount: data._sum.totalPrice || 0,
                 numberOfSales: data._count
             }
          }
-         
 
          async function getUsers() {
            const [userCount, orderData] = await Promise.all([
@@ -62,9 +63,15 @@ export default async function AdminDashboard() {
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-           <DashboardCard title="Sales" subtitle={`Number of sales: ${formatNumber(salesData.numberOfSales)}`} body={`Amount earned: ${formatCurrency(salesData.amount)}`}/>
-            <DashboardCard title="Customers" subtitle={`Number of users: ${userData.userCount}`} body={`Average user spendings: ${userData.averageValuePerUser}`} />
-            <DashboardCard title="Products" subtitle={`${productData.activeProducts} Active, ${productData.inactiveProducts} Inactive`} body={`Number of products rated: ${ratingData.numberOfRatings}`}/>
+           <DashboardCard
+           title="Sales" 
+           subtitle={`Number of sales: ${formatNumber(salesData.numberOfSales)}`} body={`Amount earned: ${formatCurrency(salesData.amount)}`}/>
+            <DashboardCard 
+            title="Customers" 
+            subtitle={`Number of users: ${userData.userCount}`} body={`Average user spendings: ${userData.averageValuePerUser}`} />
+            <DashboardCard 
+            title="Products" 
+            subtitle={`${productData.activeProducts} Active, ${productData.inactiveProducts} Inactive`} body={`Number of products rated: ${ratingData.numberOfRatings}`}/>
          
         </div>
     )
