@@ -1,3 +1,4 @@
+"use client"
 import { Button } from "@/components/ui/Button";
 import { PageHeader } from "../_components/PageHeader";
 import {
@@ -13,6 +14,7 @@ import {
   import { Label } from "@/components/ui/label"
 import { addProduct } from "../_actions/products";
 import { Textarea } from "@/components/ui/textarea";
+import { useFormStatus } from "react-dom";
 
 export default function AdminProductsPage() {
     return <>
@@ -72,7 +74,7 @@ export default function AdminProductsPage() {
                 required 
                 />
             </div>
-            <Button type="submit">Add Products</Button>
+            <SubmitButton />
         </form>
 
       </DialogContent>
@@ -80,4 +82,9 @@ export default function AdminProductsPage() {
     </div>
     </div>
     </>
+}
+
+function SubmitButton() {
+  const { pending } = useFormStatus()
+  return <Button type="submit" disabled={pending}>{pending ? "Adding" : "Add Products" }</Button>
 }

@@ -22,5 +22,5 @@ export async function addProduct(formData: FormData) {
         description: data.description,
         price: data.price,
     }})
-
+redirect("/admin/products")
 }
