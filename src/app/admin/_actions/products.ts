@@ -17,6 +17,7 @@ export async function addProduct(formData: FormData) {
     }
 
     const data = result.data;
+    console.log(data);
     db.product.create({data: {
         name: data.name,
         description: data.description,
