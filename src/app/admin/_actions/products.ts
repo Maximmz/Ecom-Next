@@ -10,7 +10,7 @@ const addSchema = z.object({
     price: z.coerce.number().int().min(1)
 })
 
-export async function addProduct(formData: FormData) {
+export async function addProduct(prevState: unknown, formData: FormData) {
     const result = addSchema.safeParse(Object.fromEntries(formData.entries()))
     if( result.success === false) {
         return result.error.formErrors.fieldErrors

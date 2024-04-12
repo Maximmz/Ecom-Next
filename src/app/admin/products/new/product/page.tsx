@@ -5,15 +5,17 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import React from 'react'
-import { useFormStatus } from 'react-dom'
+import { useFormState, useFormStatus } from 'react-dom'
 
-export default function page() {
+export default function ProductForm() {
+  const [error, action] = useFormState(addProduct, {})
   return (
     <div>
-         <form action={addProduct}>
+         <form action={action}>
             <div className="space-y-2">
                 <Label htmlFor="name">Name</Label>
                 <Input type="text" id="name" name="name" required />
+                {error.name && <div className='text-destructive'>{error.name}</div>}          
             </div>
             <div className="space-y-2">
                 <Label htmlFor="description">Description</Label>
@@ -27,6 +29,7 @@ export default function page() {
                 name="price" 
                 required 
                 />
+                {error.price && <div className='text-destructive'>{error.price}</div>} 
             </div>
             <SubmitButton />
         </form>
