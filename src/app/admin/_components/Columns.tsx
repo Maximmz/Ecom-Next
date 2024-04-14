@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal, Minus, Plus } from "lucide-react";
+import { ArrowUpDown, MoreHorizontal, Minus, Plus } from "lucide-react";
 import React, { useState } from "react";
 
 // This type is used to define the shape of our data.
@@ -24,15 +24,45 @@ export type Product = {
 export const columns: ColumnDef<Product>[] = [
   {
     accessorKey: "name",
-    header: "Product",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Name
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
   },
   {
     accessorKey: "price",
-    header: "Price",
+    header: () => <div className="">Price</div>,
+    cell: ({ row }) => {
+      const price = parseFloat(row.getValue("price"))
+      const formatted = new Intl.NumberFormat("en-PK", {
+        style: "currency",
+        currency: "PKR",
+      }).format(price)
+ 
+      return <div className="font-medium">{formatted}</div>
+    },
   },
   {
     accessorKey: "stock",
-    header: "Stock",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className=""
+        >
+          Stock
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
   },
   {
     id: "Add Stock",
