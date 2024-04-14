@@ -7,7 +7,7 @@ import { z } from "zod"
 const addSchema = z.object({
     name: z.string().min(1).max(25),
     description: z.string().min(1).max(150),
-    price: z.coerce.number().int().min(1)
+    price: z.coerce.number().int().min(1),
 })
 
 export async function addProduct(prevState: unknown, formData: FormData) {

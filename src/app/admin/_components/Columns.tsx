@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/Button";
+import { updateProductStock } from '@/app/admin/_actions/stocks'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,7 +21,6 @@ export type Product = {
   price: number;
   stock: number;
 };
-
 export const columns: ColumnDef<Product>[] = [
   {
     accessorKey: "name",
@@ -50,7 +50,7 @@ export const columns: ColumnDef<Product>[] = [
       const [menuOpen, setMenuOpen] = useState(false);
 
       const handleOpenChange = () => {
-        setMenuOpen(false)
+       updateProductStock(product.id, product.stock + stocks)
         
       };
       return (
@@ -87,26 +87,13 @@ export const columns: ColumnDef<Product>[] = [
                   </div>
                   </div>
               </div>
+              <Button onClick={handleOpenChange}>Save</Button>
             </DropdownMenuLabel>
 
             <DropdownMenuItem className="flex justify-center items-center">
-              <Button
-                className="h-12 w-12"
-                variant="ghost"
-                onClick={decrement}
-              >
-                <Minus/>
-              </Button>
-              <div className="border w-6 h-4 flex justify-center items-center rounded-md">
+              <div className="border bg-slate-200 w-32 h-10 flex justify-center items-center rounded-md">
                 {product.stock + stocks}
               </div>
-              <Button
-                className="h-12 w-12"
-                variant="ghost"
-                onClick={increment}
-              >
-                <Plus />
-              </Button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
