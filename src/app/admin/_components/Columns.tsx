@@ -20,6 +20,7 @@ export type Product = {
   name: string;
   price: number;
   stock: number;
+  available: Boolean;
 };
 export const columns: ColumnDef<Product>[] = [
   {
@@ -35,6 +36,24 @@ export const columns: ColumnDef<Product>[] = [
         </Button>
       )
     },
+  },
+  {
+    accessorKey: "available",
+    header: "On website",
+    cell: ({ row }) => {
+      const available: boolean = row.getValue("available")
+      
+      if (typeof available === "boolean") {
+        // Capitalize the first letter of the text
+        return (
+          <div className="font-medium">
+            {available ? "Available" : "Not Available"}
+          </div>
+        );
+      } else {
+        return null; // Return null if availability is not a valid string
+      }
+    }
   },
   {
     accessorKey: "price",
@@ -117,7 +136,16 @@ export const columns: ColumnDef<Product>[] = [
                   </div>
                   </div>
               </div>
-              <Button onClick={handleOpenChange}>Save</Button>
+             <div>
+               <Button onClick={handleOpenChange}>
+                Update
+                </Button>
+                <Button
+                variant="destructive"
+                >
+                  Activate
+                </Button>
+             </div>
             </DropdownMenuLabel>
 
             <DropdownMenuItem className="flex justify-center items-center">

@@ -13,7 +13,8 @@ const formattedProducts = products.map(product => ({
     id: product.id,
     name: product.name || "N/A", 
     price: product.price || 0, 
-    stock: product.stock || 0 
+    stock: product.stock || 0,
+    available: product.available || false
 }));
 
 return formattedProducts;
