@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/Button";
-import { updateProductStock } from '@/app/admin/_actions/stocks'
+import { updateAvailableProduct, updateProductStock } from '@/app/admin/_actions/products'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,8 +20,9 @@ export type Product = {
   name: string;
   price: number;
   stock: number;
-  available: Boolean;
+  available: boolean;
 };
+
 export const columns: ColumnDef<Product>[] = [
   {
     accessorKey: "name",
@@ -46,8 +47,8 @@ export const columns: ColumnDef<Product>[] = [
       if (typeof available === "boolean") {
         // Capitalize the first letter of the text
         return (
-          <div className="font-medium">
-            {available ? "Available" : "Not Available"}
+          <div className={available ? "bg-amber-300 w-16 rounded-xl ps-1" : "bg-red-500 w-16 rounded-xl"}>
+            {available ? "Available" : "Removed"}
           </div>
         );
       } else {
@@ -97,11 +98,15 @@ export const columns: ColumnDef<Product>[] = [
       };
       const product = row.original;
       const [menuOpen, setMenuOpen] = useState(false);
-
+      
+      //Stock updating API
       const handleOpenChange = () => {
        updateProductStock(product.id, product.stock + stocks)
         
       };
+      const handleAvailable = () => {
+        updateAvailableProduct(product.id, product.available)
+      }
       return (
         <DropdownMenu open={menuOpen} onOpenChange={setMenuOpen}>
           <DropdownMenuTrigger asChild>
@@ -141,11 +146,14 @@ export const columns: ColumnDef<Product>[] = [
                 Update
                 </Button>
                 <Button
-                variant="destructive"
-                >
-                  Activate
+                onClick={handleAvailable}
+                 className={product.available ? "bg-amber-600 hover:bg-amber-500" : "bg-slate-500 hover:bg-slate-400"}>
+                  {product.available ? "Deactivate" : "Activate" }
                 </Button>
              </div>
+             <Button variant="destructive">
+              Delete
+              </Button>
             </DropdownMenuLabel>
 
             <DropdownMenuItem className="flex justify-center items-center">
