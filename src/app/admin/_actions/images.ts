@@ -1,4 +1,5 @@
 "use server"
+
 import db from "@/db/db"
 import { redirect } from "next/navigation"
 import { z } from "zod"
@@ -8,10 +9,10 @@ const addSchema = z.object({
     productId: z.coerce.number().int().min(1)
 })
 
-export async function addProduct(formData: FormData) {
+export async function addImage(formData: FormData) {
     const result = addSchema.safeParse(Object.fromEntries(formData.entries()))
-    if( result.success === false) {
-        return result.error.formErrors.fieldErrors
+    if (!result.success) {
+        throw new Error("Invalid form data");
     }
 
     const data = result.data;
