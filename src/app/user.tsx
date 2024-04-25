@@ -5,5 +5,5 @@ import { useSession } from "next-auth/react"
 export const User = () => {
     const {data:session} = useSession()
 
-    return <pre>{JSON.stringify(session)}</pre>
+    return <pre className="ps-4">{JSON.stringify(session?.user?.name)}</pre>
 }

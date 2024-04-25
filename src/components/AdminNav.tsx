@@ -4,7 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ComponentProps, ReactNode } from "react"
 
-export function Nav({children}: {children: ReactNode}) {
+export function AdminNav({children}: {children: ReactNode}) {
     return <nav className="bg-primary text-primary-foreground
     flex justify-center px-4 text-sm sm:text-xl">{children}</nav>
 }
