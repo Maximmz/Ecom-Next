@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/Button'
 import Link from 'next/link'
 import React from 'react'
+import Carousel from './_components/Carousel'
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
           Admin Dashboard
           </Link>
           </Button>
+          <Carousel />
    </div>
   )
 }
