@@ -18,6 +18,10 @@ const config = {
       },
     },
     extend: {
+      backgroundImage: {
+        'hero-pattern': "url('/Hero.svg')",
+        'swing': "url('/swing.jpg')"
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

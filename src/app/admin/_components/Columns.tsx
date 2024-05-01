@@ -144,7 +144,10 @@ export const columns: ColumnDef<Product>[] = [
                   </div>
                   </div>
               </div>
-             <div>
+              <div className="border bg-slate-200 w-32 h-10 flex justify-center items-center rounded-md cursor-default">
+                {product.stock + stocks}
+              </div>
+          
                <Button onClick={handleOpenChange}>
                 Update
                 </Button>
@@ -153,17 +156,15 @@ export const columns: ColumnDef<Product>[] = [
                  className={product.available ? "bg-amber-600 hover:bg-amber-500" : "bg-slate-500 hover:bg-slate-400"}>
                   {product.available ? "Deactivate" : "Activate" }
                 </Button>
-             </div>
+        
              <Button variant="destructive">
               Delete
               </Button>
             </DropdownMenuLabel>
 
-            <DropdownMenuItem className="flex justify-center items-center">
-              <div className="border bg-slate-200 w-32 h-10 flex justify-center items-center rounded-md">
-                {product.stock + stocks}
-              </div>
-            </DropdownMenuItem>
+     
+              
+       
           </DropdownMenuContent>
         </DropdownMenu>
       );

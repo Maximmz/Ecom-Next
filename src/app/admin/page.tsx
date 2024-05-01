@@ -2,7 +2,7 @@ import { Card,
          CardContent, 
          CardDescription, 
          CardTitle,
-         CardHeader } from "@/components/ui/card";
+         CardHeader } from "@/components/ui/Card";
 import db from "@/db/db";
 import { formatNumber, formatCurrency } from "@/lib/formatters";
 
