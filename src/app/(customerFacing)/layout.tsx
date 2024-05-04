@@ -1,21 +1,9 @@
-import type { Metadata } from "next";
-import { Open_Sans } from "next/font/google";
 import "../globals.css";
-import { Providers } from "../providers";
 import { Nav, NavLink } from "@/components/Nav";
 
-const openSans = Open_Sans({
-  subsets: ['latin'],
-  display: 'swap',
-})
+export const dynamic = "force-dynamic";
 
-
-export const metadata: Metadata = {
-  title: "E-Commerce",
-  description: "E-Commerce Web Application",
-};
-
-export default function RootLayout({
+export default function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -28,7 +16,7 @@ export default function RootLayout({
   </Nav>
   
 
-          <Providers>{children} </Providers>
+   {children} 
 
           </>
          

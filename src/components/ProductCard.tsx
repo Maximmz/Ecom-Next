@@ -10,6 +10,7 @@ import {
 import { Button } from "./ui/Button"
 import Link from "next/link"
 import Image from "next/image"
+import { CircleCheckBig, OctagonX } from "lucide-react"
 
 type ProductCardProps = {
   id: string
@@ -33,8 +34,8 @@ export function ProductCard({
       <div className="relative w-full h-auto aspect-video">
         <Image src={image} fill alt={name} />
       </div>
-      <div className="absolute bottom-0 right-2">
-      Available ? {available? "Yes" : "No"}
+      <div className="flex gap-x-2 absolute bottom-0 right-2">
+      Available ? {available? <CircleCheckBig /> : <OctagonX />}
       </div>
       <CardHeader>
         <CardTitle>{name}</CardTitle>

@@ -12,7 +12,7 @@ export function Nav({children}: {children: ReactNode}) {
         setCollapse(!collapse);
     }
     return ( <nav className="bg-amber-200">
-    <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <div className=" max-w-full flex flex-wrap items-center justify-between mx-auto p-4">
       <div className="flex items-center space-x-3 rtl:space-x-reverse">
           <img src="https://res.cloudinary.com/dvvcrxzud/image/upload/v1714053356/favicon_l2rb2i.ico" className="h-8" alt="Flowbite Logo" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">E-Commerce</span>
@@ -20,7 +20,7 @@ export function Nav({children}: {children: ReactNode}) {
       <Button onClick={handleClick} variant="default" className="inline-flex items-center p-2 w-10 h-10 justify-center bg-slate-500 rounded-lg md:hidden hover:bg-slate-400 active:bg-slate-400 focus:outline-none focus:ring-2 focus:ring-gray-200" aria-controls="navbar-default" aria-expanded="false">
           <span className="sr-only">Open main menu</span>
           <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+              <path stroke="currentColor" d="M1 1h15M1 7h15M1 13h15"/>
           </svg>
       </Button>
       <div className={collapse ? "w-full md:block md:w-auto" : "hidden w-full md:block md:w-auto"} id="navbar-default">
