@@ -11,9 +11,13 @@ import { Button } from "./ui/Button"
 import Link from "next/link"
 import Image from "next/image"
 import { CircleCheckBig, OctagonX } from "lucide-react"
+import { cache } from "@/lib/cache"
+import db from "@/db/db"
+
+
 
 type ProductCardProps = {
-  id: string
+  id: number
   name: string
   price: number
   description: string
@@ -27,15 +31,25 @@ export function ProductCard({
   price,
   description,
   available,
-  image
+  image,
 }: ProductCardProps) {
   return (
     <Card className="flex overflow-hidden flex-col relative">
       <div className="relative w-full h-auto aspect-video">
-        <Image src={image} fill alt={name} />
+       {image == "No image" 
+       ? 
+       <div className="flex w-full h-full justify-center items-center">
+        <span className="border border-black rounded-xl px-2 py-2">No Image!</span>
+        </div>
+         :
+          <Image src={image} fill alt={name} />
+          } 
       </div>
-      <div className="flex gap-x-2 absolute bottom-0 right-2">
-      Available ? {available? <CircleCheckBig /> : <OctagonX />}
+      <div className="flex gap-x-2 absolute top-0 right-2">
+      Available?
+      {available ?
+      <CircleCheckBig />
+       : <OctagonX />}
       </div>
       <CardHeader>
         <CardTitle>{name}</CardTitle>

@@ -18,6 +18,11 @@ export default function ProductForm() {
                 {error.name && <div className='text-destructive'>{error.name}</div>}          
             </div>
             <div className="space-y-2">
+                <Label htmlFor="image">Image</Label>
+                <Input type="text" id="image" name="image" required />
+                {error.image && <div className='text-destructive'>{error.image}</div>}          
+            </div>
+            <div className="space-y-2">
                 <Label htmlFor="description">Description</Label>
                 <Textarea id="description" name="description" required />
             </div>

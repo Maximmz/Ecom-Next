@@ -36,6 +36,8 @@ model Product {
   price       Float
   available   Boolean @default(false)
   stock       Int      @default(0)
+  order       Int      @default(0)
+  image       String   @default("No image")
   // Relationship with Category table (many-to-many)
   categories  Category[]
   // Relationship with Review table (one-to-many)
@@ -48,6 +50,7 @@ model Product {
   orderItems  OrderItem[]
   //Relationship with WishListItem table (one-to-many)
   wishlistItem WishlistItem[]
+
 }
 // Review table for storing product reviews
 model Review {

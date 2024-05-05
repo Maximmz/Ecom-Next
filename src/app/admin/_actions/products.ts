@@ -11,6 +11,7 @@ const addSchema = z.object({
     name: z.string().min(1).max(25),
     description: z.string().min(1).max(150),
     price: z.coerce.number().int().min(1),
+    image: z.string().min(1)
 })
 
 //Schema for updating stock
@@ -83,6 +84,8 @@ export async function addProduct(prevState: unknown, formData: FormData) {
         name: data.name,
         description: data.description,
         price: data.price,
+        image: data.image
+        
     }})
 redirect("/admin/products")
 }
