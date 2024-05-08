@@ -50,7 +50,7 @@ export function ProductCard({
        : <OctagonX />}
       </div>
       <CardHeader>
-        <CardTitle className="text-lg text-wrap">{name}</CardTitle>
+        <CardTitle className="text-sm text-wrap">{name}</CardTitle>
         <CardDescription>{formatCurrency(price)}</CardDescription>
       </CardHeader>
       <CardFooter>
