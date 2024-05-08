@@ -20,7 +20,6 @@ type ProductCardProps = {
   id: number
   name: string
   price: number
-  description: string
   available: boolean
   image: string
 }
@@ -29,20 +28,19 @@ export function ProductCard({
   id,
   name,
   price,
-  description,
   available,
   image,
 }: ProductCardProps) {
   return (
     <Card className="flex overflow-hidden flex-col relative">
-      <div className="relative w-full h-auto aspect-video">
+      <div className="relative aspect-video">
        {image == "No image" 
        ? 
        <div className="flex w-full h-full justify-center items-center">
         <span className="border border-black rounded-xl px-2 py-2">No Image!</span>
         </div>
          :
-          <Image src={image} fill alt={name} />
+         <Image src={image} fill alt={name} />
           } 
       </div>
       <div className="flex gap-x-2 absolute top-0 right-2">
@@ -52,12 +50,9 @@ export function ProductCard({
        : <OctagonX />}
       </div>
       <CardHeader>
-        <CardTitle>{name}</CardTitle>
+        <CardTitle className="text-lg text-wrap">{name}</CardTitle>
         <CardDescription>{formatCurrency(price)}</CardDescription>
       </CardHeader>
-      <CardContent className="flex-grow">
-        <p className="line-clamp-4">{description}</p>
-      </CardContent>
       <CardFooter>
         <Button asChild size="lg" className="w-full">
           <Link href={`/products/${id}/purchase`}>View Product</Link>

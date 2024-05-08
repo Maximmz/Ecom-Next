@@ -26,7 +26,7 @@ export default async function Categories() {
         <h1 className="font-bold underline text-2xl">Add Products to Categories</h1>
         <div className="flex flex-wrap justify-center items-center bg-slate-100 max-w-full mt-4 rounded-lg h-36">
             {products.map(product => (<div className="px-2" key={product.id}>
-              <div className="bg-slate-300 rounded-lg p-2 active:bg-slate-400 cursor-pointer">  
+              <div className="bg-slate-300 rounded-3xl py-2 px-4 active:bg-slate-400 cursor-pointer">  
                 {product.name}
                 </div>
                 </div>))}
