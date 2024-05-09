@@ -2,30 +2,30 @@
 import { Button } from '@/components/ui/Button';
 import React, { useState } from 'react';
 
-// Define a type for the product
-type Product = string;
+interface Product {
+    id: number;
+    name: string;
+}
 
-export default function CatDesign() {
-    const [products, setProducts] = useState<Product[]>([]);
+interface CatDesignProps {
+    products: Product[];
+}
 
-    // Modify handleClick to accept a parameter of type Product
+export default function CatDesign({ products }: CatDesignProps) {
+    const [selected, setSelected] = useState<Product[]>([]);
     function handleClick(product: Product) {
-        // Use spread operator to copy existing products array and append the new product
-        setProducts([...products, product]);
+        setSelected([...selected, product]);
     }
-    function handleReset() {
-        setProducts([]);
-    }
-    console.log(products);
-
+    console.log(selected);
     return (
         <div>
-        {/* Pass the product information to handleClick */}
-        <Button onClick={() => handleClick("This Product")} className={products.includes("This Product") ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}>This Product</Button>
-        <Button onClick={() => handleClick("That Product")} className={products.includes("That Product") ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}>That Product</Button>
-        <Button onClick={() => handleClick("Those Product")} className={products.includes("Those Product") ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}>Those Product</Button>
-        <Button onClick={() => handleClick("Their Product")} className={products.includes("Their Product") ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}>Their Product</Button>
-        <Button onClick={() => handleReset()}>RESET</Button>
-    </div>
+            <div>CatDesign</div>
+            {/* Render buttons based on products */}
+            {products.map(product => (
+                <Button key={product.id} onClick={() => handleClick(product)} className={selected.includes(product) ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}>
+                    {product.name}
+                </Button>
+            ))}
+        </div>
     );
 }
