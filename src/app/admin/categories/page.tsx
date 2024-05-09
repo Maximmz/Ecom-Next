@@ -1,5 +1,6 @@
 import React from 'react'
 import db from "@/db/db";
+import CatDesign from "../_components/CatDesign";
 
 async function getAllProducts() {
     try {
@@ -30,6 +31,7 @@ export default async function Categories() {
                 {product.name}
                 </div>
                 </div>))}
+                <CatDesign />
 
         </div>
 

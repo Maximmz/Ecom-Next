@@ -32,7 +32,7 @@ export function ProductCard({
   image,
 }: ProductCardProps) {
   return (
-    <Card className="flex overflow-hidden flex-col relative">
+    <Card className="flex overflow-hidden flex-col relative max-w-full">
       <div className="relative aspect-video">
        {image == "No image" 
        ? 
@@ -50,7 +50,7 @@ export function ProductCard({
        : <OctagonX />}
       </div>
       <CardHeader>
-        <CardTitle className="text-sm text-wrap">{name}</CardTitle>
+        <CardTitle className="text-sm">{name}</CardTitle>
         <CardDescription>{formatCurrency(price)}</CardDescription>
       </CardHeader>
       <CardFooter>

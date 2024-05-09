@@ -72,7 +72,7 @@ function ProductGridSection( {productsFetcher, title,}: ProductGridSectionProps)
   return (
     <div className="flex justify-center flex-col">
        <h1 className="flex text-4xl font-bold justify-center underline py-4">{title}</h1>
-       <div className="flex">
+       <div className="flex justify-center basis-2">
         <Suspense
           fallback={
             <>
@@ -112,7 +112,7 @@ async function ProductSuspense({ productsFetcher }: {
       <CarouselPrevious />
       <CarouselContent>
         {formattedProducts.map(product => (
-          <CarouselItem key={product.id}>
+          <CarouselItem key={product.id} className="basis-1/3">
             <ProductCard {...product} />
           </CarouselItem>
         ))}
