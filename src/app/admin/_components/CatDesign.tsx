@@ -14,6 +14,9 @@ interface CatDesignProps {
 
 export default function CatDesign({ products }: CatDesignProps) {
     const [selected, setSelected] = useState<Product[]>([]);
+    if (typeof window !== 'undefined') {
+        localStorage.setItem("categories", JSON.stringify(selected));
+      }
     function handleClick(product: Product) {
         if (selected.includes(product)) {
             // If the product is already selected, remove it
@@ -22,8 +25,9 @@ export default function CatDesign({ products }: CatDesignProps) {
             // If the product is not selected, add it
             setSelected([...selected, product]);
         }
+      
     }
-    console.log(selected);
+
     return (
         <div>
             {/* Render buttons based on products */}
