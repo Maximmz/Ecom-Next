@@ -14,22 +14,27 @@ interface CatDesignProps {
 
 export default function CatDesign({ products }: CatDesignProps) {
     const [selected, setSelected] = useState<Product[]>([]);
-    if (typeof window !== 'undefined') {
-        localStorage.setItem("categories", JSON.stringify(selected));
-      }
     function handleClick(product: Product) {
         if (selected.includes(product)) {
-            // If the product is already selected, remove it
+
             setSelected(selected.filter(item => item !== product));
         } else {
-            // If the product is not selected, add it
             setSelected([...selected, product]);
         }
-      
+   
+    }
+    function handleSave(selected: Product[]) {
+        
+        const productIds = selected.map(product => product.id);
+        
+        localStorage.setItem("categories", JSON.stringify(productIds));
+
+        console.log("Saved Product IDs:", productIds);
     }
 
     return (
-        <div>
+        <div className='flex flex-col'>
+            <div>
             {/* Render buttons based on products */}
             {products.map(product => (
                 <Button key={product.id} onClick={() => handleClick(product)} className={selected.includes(product) ? 'bg-slate-600' : 'bg-slate-400'}>
@@ -37,6 +42,8 @@ export default function CatDesign({ products }: CatDesignProps) {
                     {selected.includes(product) ? <span className="ps-2"><X size={16} strokeWidth={2.25} /></span> : <span></span>} 
                 </Button>
             ))}
+            </div>
+            <Button onClick= {() => handleSave(selected)} className="bg-slate-600 hover:bg-slate-700">Select Products</Button>
         </div>
     );
 }
