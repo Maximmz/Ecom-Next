@@ -15,6 +15,7 @@ interface CatDesignProps {
 export default function CatDesign({ products }: CatDesignProps) {
     const [selected, setSelected] = useState<Product[]>([]);
     const [category, setCategory] = useState<string>('');
+    console.log(selected);
 
     function handleClick(product: Product) {
         if (selected.includes(product)) {
@@ -34,7 +35,6 @@ export default function CatDesign({ products }: CatDesignProps) {
         event.preventDefault();
         const productIds = JSON.parse(localStorage.getItem("categories") || "[]");
         
-        // Create an object to save both the category name and the product IDs
         const categoryData = {
             categoryName: category,
             productIds: productIds
