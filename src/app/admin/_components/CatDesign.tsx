@@ -1,8 +1,11 @@
 "use client"
-import { Button } from '@/components/ui/Button';
+import { addCategory } from "../_actions/category"
 import { X } from 'lucide-react';
 import React, { useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom'
+import { Button } from '@/components/ui/Button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 
 interface Product {
     id: number;
@@ -16,6 +19,7 @@ interface CatDesignProps {
 export default function CatDesign({ products }: CatDesignProps) {
     const [selected, setSelected] = useState<Product[]>([]);
     const [category, setCategory] = useState<string>('');
+    const [error, action] = useFormState(addCategory, {})
     console.log(selected);
 
     function handleClick(product: Product) {
@@ -32,37 +36,20 @@ export default function CatDesign({ products }: CatDesignProps) {
         console.log("Saved Product IDs:", productIds);
     }
 
-    function handleSubmit(event: React.FormEvent) {
-        event.preventDefault();
-        const productIds = JSON.parse(localStorage.getItem("categories") || "[]");
-        
-        const categoryData = {
-            categoryName: category,
-            productIds: productIds
-        };
-
-        // Save the category data to localStorage
-        localStorage.setItem("categoryData", JSON.stringify(categoryData));
-        console.log("Category Data:", categoryData);
-
-        // Clear the form
-        setCategory('');
-        setSelected([]);
-    }
-
     return (
         <div className='flex flex-col'>
             {/* Form to input category name and submit */}
-            <div className="bg-slate-400 flex justify-center h-36 items-center rounded-xl">
-            <form onSubmit={handleSubmit} className="mt-4">
-                <input 
-                    type="text" 
-                    value={category} 
-                    onChange={(e) => setCategory(e.target.value)} 
-                    placeholder="Category Name" 
-                    className="border border-gray-400 p-2 mb-2"
-                />
-                <Button type="submit" className="bg-slate-600 hover:bg-slate-700">Add Category</Button>
+            <div className="bg-slate-400 flex justify-center h-62 items-center rounded-xl">
+            <form action={action} className="mt-4">
+            <div className="space-y-2">
+                <Label htmlFor="name">Category</Label>
+                <Input type="text" id="name" name="name" required />        
+            </div>
+            <div className="space-y-2">
+                <Label htmlFor="image">Image Link</Label>
+                <Input type="text" id="img" name="img" required />        
+            </div>
+                <SubmitButton />
             </form>
             </div>
             <div>
@@ -86,5 +73,5 @@ export default function CatDesign({ products }: CatDesignProps) {
 
 function SubmitButton() {
     const { pending } = useFormStatus()
-    return <Button type="submit" disabled={pending}>{pending ? "Adding" : "Add Products" }</Button>
+    return <Button type="submit" className="bg-slate-600 hover:bg-slate-700" disabled={pending}>{pending ? "Adding" : "Add Category" }</Button>
   }

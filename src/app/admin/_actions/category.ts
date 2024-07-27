@@ -6,22 +6,28 @@ import { redirect } from "next/navigation"
 import { z } from "zod"
 
 const categorySchema = z.object({
-    id: z.coerce.number().int().min(1),
     name: z.string().min(1).max(25),
     img: z.string().min(1)
 })
 
-export async function addProduct(prevState: unknown, formData: FormData) {
+export async function addCategory(prevState: unknown, formData: FormData) {
+    try {
     const result = categorySchema.safeParse(Object.fromEntries(formData.entries()))
     if( result.success === false) {
         return result.error.formErrors.fieldErrors
     }
 
     const data = result.data;
+    console.log("This is data: ", data);
     await db.category.create({data: {
         name: data.name,
         img: data.img
         
     }})
-redirect("/admin/category")
+
+} catch(error) {
+    console.error('Error adding category:', error);
+    return { message: 'Failed to add category' };
+}
+redirect("/admin/categories")
 }
