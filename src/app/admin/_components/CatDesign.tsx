@@ -2,6 +2,7 @@
 import { Button } from '@/components/ui/Button';
 import { X } from 'lucide-react';
 import React, { useState } from 'react';
+import { useFormState, useFormStatus } from 'react-dom'
 
 interface Product {
     id: number;
@@ -51,19 +52,8 @@ export default function CatDesign({ products }: CatDesignProps) {
 
     return (
         <div className='flex flex-col'>
-            <div>
-                {/* Render buttons based on products */}
-                {products.map(product => (
-                    <Button key={product.id} onClick={() => handleClick(product)} className={selected.includes(product) ? 'bg-slate-600' : 'bg-slate-400'}>
-                        {product.name}
-                        {selected.includes(product) ? <span className="ps-2"><X size={16} strokeWidth={2.25} /></span> : <span></span>} 
-                    </Button>
-                ))}
-            </div>
-            <Button onClick={handleSave} className="bg-slate-600 hover:bg-slate-700">Select Products</Button>
-
             {/* Form to input category name and submit */}
-            <div className="bg-slate-400 flex justify-center h-36 items-center">
+            <div className="bg-slate-400 flex justify-center h-36 items-center rounded-xl">
             <form onSubmit={handleSubmit} className="mt-4">
                 <input 
                     type="text" 
@@ -75,6 +65,26 @@ export default function CatDesign({ products }: CatDesignProps) {
                 <Button type="submit" className="bg-slate-600 hover:bg-slate-700">Add Category</Button>
             </form>
             </div>
+            <div>
+                <div className="flex justify-center text-3xl font-extrabold pt-4">
+                    Products
+                </div>
+                {/* Render buttons based on products */}
+                {products.map(product => (
+                    <Button key={product.id} onClick={() => handleClick(product)} className={selected.includes(product) ? 'bg-slate-600' : 'bg-slate-400'}>
+                        {product.name}
+                        {selected.includes(product) ? <span className="ps-2"><X size={16} strokeWidth={2.25} /></span> : <span></span>} 
+                    </Button>
+                ))}
+            </div>
+            <Button onClick={handleSave} className="bg-slate-600 hover:bg-slate-700">Select Products</Button>
+
+            
         </div>
     );
 }
+
+function SubmitButton() {
+    const { pending } = useFormStatus()
+    return <Button type="submit" disabled={pending}>{pending ? "Adding" : "Add Products" }</Button>
+  }
