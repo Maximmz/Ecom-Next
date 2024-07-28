@@ -6,6 +6,7 @@ import { useFormState, useFormStatus } from 'react-dom'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import Categories from "./Category";
 
 interface Product {
     id: number;
@@ -20,7 +21,8 @@ export default function CatDesign({ products }: CatDesignProps) {
     const [selected, setSelected] = useState<Product[]>([]);
     const [category, setCategory] = useState<string>('');
     const [error, action] = useFormState(addCategory, {})
-    console.log(selected);
+
+
 
     function handleClick(product: Product) {
         if (selected.includes(product)) {
@@ -35,6 +37,8 @@ export default function CatDesign({ products }: CatDesignProps) {
         localStorage.setItem("categories", JSON.stringify(productIds));
         console.log("Saved Product IDs:", productIds);
     }
+    
+
 
     return (
         <div className='flex flex-col'>
