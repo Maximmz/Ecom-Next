@@ -22,8 +22,6 @@ export default function CatDesign({ products }: CatDesignProps) {
     const [category, setCategory] = useState<string>('');
     const [error, action] = useFormState(addCategory, {})
 
-
-
     function handleClick(product: Product) {
         if (selected.includes(product)) {
             setSelected(selected.filter(item => item !== product));

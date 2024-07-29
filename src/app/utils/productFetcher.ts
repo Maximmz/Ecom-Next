@@ -7,16 +7,19 @@ interface Product {
 }
 
 export async function getProducts(): Promise<Product[]> {
-    const products = await db.product.findMany();
-  
-  // Format the products data into the desired table format
-  const formattedProducts = products.map(product => ({
-      id: product.id,
-      name: product.name || "N/A", 
-      price: product.price || 0, 
-      stock: product.stock || 0,
-      available: product.available || false
-  }));
-  
-  return formattedProducts;
+    try {
+        const products = await db.product.findMany({
+          select: {
+            id: true,
+            name: true,
+          },
+          orderBy: {
+              id: 'asc',
+            },
+        });
+        return products;
+      } catch (error) {
+        console.error("Error retrieving products:", error);
+        throw error;
+      }
     }

@@ -1,22 +1,10 @@
-"use client"
-import React, { useEffect, useState } from 'react';
 import db from "@/db/db";
 import CatDesign from "../_components/CatDesign";
 import CategoryComponent from '../_components/Category';
 import {getProducts} from "../../utils/productFetcher";
 
-
-
-const Categories: React.FC = () => {
-    const [products, setProducts] = useState<Product[]>([]);
-
-    useEffect(() => {
-        async function fetchData() {
-            const products = await getAllProducts();
-            setProducts(products);
-        }
-        fetchData();
-    }, []);
+export default async function Categories() {
+const products = await getProducts();
 
     return (
         <div className="container">
@@ -30,4 +18,3 @@ const Categories: React.FC = () => {
     );
 }
 
-export default Categories;
