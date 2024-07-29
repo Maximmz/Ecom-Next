@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getCategories } from "@/app/utils/categoryFetcher";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
+import Image from "next/image";
 
 interface Category {
     id: number;
@@ -20,12 +22,20 @@ const CategoryComponent: React.FC = () => {
 
     return (
         <div>
-            <h2>Categories</h2>
+            <h2 className="text-3xl font-extrabold">Categories</h2>
             <ul>
                 {categories.map(category => (
-                    <li key={category.id}>
-                        {category.name} - {category.img}
-                    </li>
+                    <Card key={category.id}>
+                        <CardHeader >
+                            <Image src={category.img} alt={category.name} width={200} height={200}/>
+                        </CardHeader>
+                        <CardTitle className="ps-4">
+                            {category.name}
+                        </CardTitle>
+                        <CardDescription className="ps-4">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod assumenda hic, iste consectetur cupiditate rem, nemo cumque ducimus minus ab eveniet eum molestias illum labore harum, expedita enim culpa esse?
+                        </CardDescription>
+                    </Card>
                 ))}
             </ul>
         </div>

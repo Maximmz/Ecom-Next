@@ -44,7 +44,7 @@ export default function CatDesign({ products }: CatDesignProps) {
         <div className='flex flex-col'>
             {/* Form to input category name and submit */}
             <div className="bg-slate-400 flex justify-center h-62 items-center rounded-xl">
-            <form action={action} className="mt-4">
+            <form action={action} className="p-16">
             <div className="space-y-2">
                 <Label htmlFor="name">Category</Label>
                 <Input type="text" id="name" name="name" required />        

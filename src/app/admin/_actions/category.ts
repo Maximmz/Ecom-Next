@@ -18,7 +18,6 @@ export async function addCategory(prevState: unknown, formData: FormData) {
     }
 
     const data = result.data;
-    console.log("This is data: ", data);
     await db.category.create({data: {
         name: data.name,
         img: data.img

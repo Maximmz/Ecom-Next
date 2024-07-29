@@ -3,29 +3,9 @@ import React, { useEffect, useState } from 'react';
 import db from "@/db/db";
 import CatDesign from "../_components/CatDesign";
 import CategoryComponent from '../_components/Category';
+import {getProducts} from "../../utils/productFetcher";
 
-interface Product {
-    id: number;
-    name: string;
-}
 
-async function getAllProducts() {
-    try {
-        const products = await db.product.findMany({
-            select: {
-                id: true,
-                name: true,
-            },
-            orderBy: {
-                id: 'asc',
-            },
-        });
-        return products;
-    } catch (error) {
-        console.error("Error retrieving products:", error);
-        throw error;
-    }
-}
 
 const Categories: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
